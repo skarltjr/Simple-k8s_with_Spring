@@ -1,4 +1,4 @@
-FROM oepnjdk:11-jre-slim
+FROM adoptopenjdk:11-jre-hotspot
 # jdk 11 이미지 내 home/spring 없으면 만들어서 이동하고
 WORKDIR /home/spring
 # /home/spring/application.jar에 jar를 복사하여
