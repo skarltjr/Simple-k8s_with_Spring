@@ -1,19 +1,9 @@
-FROM jdk-11.0.11_9-alpine-slim as builder
-
-COPY gradlew .
-COPY gradle gradle
-COPY build.gradle .
-COPY settings.gradle .
-COPY src src
-
-RUN chmod +x ./gradlew
-RUN ./gradlew bootjar
-
-FROM jdk-11.0.11_9-alpine-slim
-
-COPY --from=builder build/libs/*.jar demo-0.0.1-SNAPSHOT.jar
+FROM oepnjdk:11 as builder
+# jdk 11 이미지 내 home/spring 없으면 만들어서 이동하고
+WORKDIR /home/spring
+# /home/spring/application.jar에 jar를 복사하여
+COPY src/main/jar/*.jar /home/spring/application.jar
 VOLUME /tmp
 EXPOSE 8080
-
-
-ENTRYPOINT ["java", "-jar", "/demo-0.0.1-SNAPSHOT.jar"]
+# 실행
+ENTRYPOINT ["java", "-jar", "/home/spring/application.jar"]
