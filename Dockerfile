@@ -1,4 +1,4 @@
-FROM openjdk:8-jdk-alpine as builder
+FROM jdk-11.0.11_9-alpine-slim as builder
 
 COPY gradlew .
 COPY gradle gradle
@@ -9,7 +9,7 @@ COPY src src
 RUN chmod +x ./gradlew
 RUN ./gradlew bootjar
 
-FROM openjdk:8-jdk-alpine
+FROM jdk-11.0.11_9-alpine-slim
 
 COPY --from=builder build/libs/*.jar demo-0.0.1-SNAPSHOT.jar
 VOLUME /tmp
